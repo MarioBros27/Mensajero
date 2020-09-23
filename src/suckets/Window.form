@@ -222,7 +222,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="portTuTxt">
       <Properties>
-        <Property name="text" type="java.lang.String" value="2021"/>
+        <Property name="text" type="java.lang.String" value="2020"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="listenBtn">

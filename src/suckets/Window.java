@@ -102,7 +102,7 @@ public class Window extends javax.swing.JFrame {
 
         jLabel6.setText("Port");
 
-        portTuTxt.setText("2021");
+        portTuTxt.setText("2020");
 
         listenBtn.setText("Listen");
         listenBtn.addActionListener(new java.awt.event.ActionListener() {
