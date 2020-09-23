@@ -212,7 +212,6 @@ public class Window extends javax.swing.JFrame {
             int destPort = Integer.parseInt(portTuTxt.getText());
             String destIP = ipTuTxt.getText();
             try {
-                ;
                 sender = new Sender(destIP, destPort);
                 System.out.println("Sender connected to desintation");
                 connectBtn.setText("Disconnect");
@@ -222,6 +221,7 @@ public class Window extends javax.swing.JFrame {
             }
         } else {
             try {
+                connectBtn.setText("Connect");
                 sender.stopSender();
             } catch (IOException ex) {
                 Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);

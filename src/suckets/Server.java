@@ -38,8 +38,6 @@ public class Server {
     public void listen() throws IOException{
         din = new DataInputStream(s.getInputStream());
         dout = new DataOutputStream(s.getOutputStream());
-
-        din = new DataInputStream(s.getInputStream());
         while(!stop){
             byte[] messageReceived = new byte[256];
             din.readFully(messageReceived);

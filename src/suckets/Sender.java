@@ -23,15 +23,14 @@ public class Sender {
 
 
     public Sender(String ip, int port) throws IOException {
-//        this.ip = ip;
-//        this.port = port;
+
         s = new Socket(ip, port);
         dout = new DataOutputStream(s.getOutputStream());
 
     }
 
     public void send(String message) throws IOException {
-//        dout.writeUTF(message);
+
         byte[] arr = getByteArray(message);
         dout.write(arr,0,256);
         dout.flush();
