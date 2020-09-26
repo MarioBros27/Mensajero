@@ -5,6 +5,7 @@
  */
 package suckets;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,7 +21,7 @@ public class Window extends javax.swing.JFrame {
      */
     Server server;
     Sender sender;
-
+Thread thread;
     public Window() {
         initComponents();
 
@@ -56,7 +57,9 @@ public class Window extends javax.swing.JFrame {
 
         jLabel1.setText("IP");
 
+        ipTxt.setEditable(false);
         ipTxt.setText("127.0.0.1");
+        ipTxt.setEnabled(false);
         ipTxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ipTxtActionPerformed(evt);
@@ -223,6 +226,7 @@ public class Window extends javax.swing.JFrame {
             try {
                 connectBtn.setText("Connect");
                 sender.stopSender();
+                
             } catch (IOException ex) {
                 Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -237,7 +241,7 @@ public class Window extends javax.swing.JFrame {
             messageTxt.setText("");
             sender.send(message);
         } catch (IOException ex) {
-            System.out.println("failed to send message");
+            textArea.append("failed to send message"+ "\n");
             Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
         }
         
@@ -252,22 +256,26 @@ public class Window extends javax.swing.JFrame {
 
         int port = Integer.parseInt(portTxt.getText());
 
-        Thread thread;
+        if( thread != null){
+         thread.stop();
+         textArea.append("Restarting server...\n");
+        }
         thread = new Thread("server thread") {
             public void run() {
-                Server server;
+                
                 try {
                     server = new Server(port, textArea);
                     server.listen();
                 } catch (IOException ex) {
                     Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
+                    textArea.append("Servier IOException,dammit\n");
                 }
 
             }
         };
         thread.start();
+        textArea.append("Server listening:" + portTxt.getText()+"\n");
         System.out.println("Server listening:" + portTxt.getText());
-        listenBtn.setText("Listening");
     }//GEN-LAST:event_listenBtnActionPerformed
 
     /**

@@ -8,6 +8,7 @@ package suckets;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.EOFException;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -18,7 +19,7 @@ import javax.swing.JTextArea;
  * @author andres
  */
 public class Server {
-    
+
     int port;
     ServerSocket ss;
     boolean stop;
@@ -26,45 +27,58 @@ public class Server {
     JTextArea area;
     DataInputStream din;
     DataOutputStream dout;
-    
-    public Server(int port, JTextArea area) throws IOException{
+
+    public Server(int port, JTextArea area) throws IOException {
         stop = false;
         this.port = port;
         this.area = area;
         ss = new ServerSocket(port);
         s = ss.accept();
-        
+
     }
-    public void listen() throws IOException{
+
+    public void listen() throws IOException {
         din = new DataInputStream(s.getInputStream());
         dout = new DataOutputStream(s.getOutputStream());
-        while(!stop){
+        while (!stop) {
             byte[] messageReceived = new byte[256];
-            din.readFully(messageReceived);
-            String message = translate(messageReceived,20);
-            area.append("Tu: "+message+"\n");
+            try {
+                din.readFully(messageReceived);
+                String message = translate(messageReceived, 20);
+                area.append("Tu: " + message + "\n");
+            } catch (EOFException e) {
+                area.append("Stopped listening " + "\n");
+                stopServer();
+                break;
+            }
+
         }
-        
+
     }
-    public void send(String message) throws IOException{
+
+    public void send(String message) throws IOException {
         dout.writeUTF(message);
         dout.flush();
-        
+
     }
-    public void stopServer() throws IOException{
+
+    public void stopServer() throws IOException {
+        System.out.println("gonna close the server");
         stop = true;
+
         din.close();
         dout.close();
         s.close();
         ss.close();
     }
-    String translate(byte[] messageIn, int off){
+
+    String translate(byte[] messageIn, int off) {
         String message = "";
         int size = messageIn[9];
-        for(int c = off; c<off +size; c++){
+        for (int c = off; c < off + size; c++) {
             message = message + (char) messageIn[c];
         }
         return message;
     }
-   
+
 }

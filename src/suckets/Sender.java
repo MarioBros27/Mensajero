@@ -37,8 +37,10 @@ public class Sender {
     }
 
     public void stopSender() throws IOException {
-        s.close();
+        
+        dout.flush();
         dout.close();
+        s.close();
     }
     private byte[] getByteArray(String message){
         char[] msg = message.toCharArray();
