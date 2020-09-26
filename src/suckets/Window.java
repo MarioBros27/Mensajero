@@ -216,7 +216,7 @@ Thread thread;
             String destIP = ipTuTxt.getText();
             try {
                 sender = new Sender(destIP, destPort);
-                System.out.println("Sender connected to desintation");
+                textArea.append("Connected to destination\n");
                 connectBtn.setText("Disconnect");
 
             } catch (IOException ex) {
