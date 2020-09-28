@@ -5,6 +5,7 @@
  */
 package suckets;
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 
 import javax.swing.text.StyledDocument;
 import javax.swing.text.SimpleAttributeSet;
@@ -84,6 +85,11 @@ public class Window extends javax.swing.JFrame {
 
         messageTxt.setText("Escriba mensaje");
         messageTxt.setEnabled(false);
+        messageTxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                messageTxtKeyPressed(evt);
+            }
+        });
 
         sendBtn.setText("Send");
         sendBtn.setEnabled(false);
@@ -293,6 +299,12 @@ public class Window extends javax.swing.JFrame {
         //textArea.append("Server listening:" + portTxt.getText()+"\n");
         System.out.println("Server listening:" + portTxt.getText());
     }//GEN-LAST:event_listenBtnActionPerformed
+
+    private void messageTxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_messageTxtKeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            sendBtn.doClick();
+        }     
+    }//GEN-LAST:event_messageTxtKeyPressed
     
     public void appendS(String s, Color color, boolean isBold) {
         try {
