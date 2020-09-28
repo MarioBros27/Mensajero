@@ -4,11 +4,17 @@
  * and open the template in the editor.
  */
 package suckets;
+import java.awt.Color;
+
+import javax.swing.text.StyledDocument;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
 
 import java.io.EOFException;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.text.BadLocationException;
 
 /**
  *
@@ -41,8 +47,6 @@ Thread thread;
         jLabel2 = new javax.swing.JLabel();
         portTxt = new javax.swing.JTextField();
         connectBtn = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        textArea = new javax.swing.JTextArea();
         messageTxt = new javax.swing.JTextField();
         sendBtn = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
@@ -52,6 +56,8 @@ Thread thread;
         jLabel6 = new javax.swing.JLabel();
         portTuTxt = new javax.swing.JTextField();
         listenBtn = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        textPane = new javax.swing.JTextPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -76,10 +82,6 @@ Thread thread;
                 connectBtnActionPerformed(evt);
             }
         });
-
-        textArea.setColumns(20);
-        textArea.setRows(5);
-        jScrollPane1.setViewportView(textArea);
 
         messageTxt.setText("Escriba mensaje");
 
@@ -114,6 +116,8 @@ Thread thread;
             }
         });
 
+        jScrollPane2.setViewportView(textPane);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -122,7 +126,9 @@ Thread thread;
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(messageTxt)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 449, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 529, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 29, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(sendBtn)
@@ -192,8 +198,8 @@ Thread thread;
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(connectBtn)
                         .addGap(78, 78, 78))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane2)
                         .addGap(18, 18, 18)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(messageTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -216,7 +222,8 @@ Thread thread;
             String destIP = ipTuTxt.getText();
             try {
                 sender = new Sender(destIP, destPort);
-                textArea.append("Connected to destination\n");
+                appendS("Connected to destination", Color.GREEN, true);
+                //textArea.append("Connected to destination\n");
                 connectBtn.setText("Disconnect");
 
             } catch (IOException ex) {
@@ -234,16 +241,24 @@ Thread thread;
     }//GEN-LAST:event_connectBtnActionPerformed
 
     private void sendBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendBtnActionPerformed
-        try {
-            // TODO add your handling code here:
-            String message = messageTxt.getText();
-            textArea.append("Yo: "+message+"\n");
-            messageTxt.setText("");
-            sender.send(message);
-        } catch (IOException ex) {
-            textArea.append("failed to send message"+ "\n");
-            Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
+        if (messageTxt.getText().length() <= 236 && messageTxt.getText().length() > 0) {
+            try {
+                // TODO add your handling code here:
+                String message = messageTxt.getText();
+                appendS("Yo: " + message, Color.BLACK, false);
+                //textArea.append("Yo: "+message+"\n");
+                messageTxt.setText("");
+                sender.send(message);
+            } catch (IOException ex) {
+                appendS("Failed to send the message.", Color.RED, true);
+                //textArea.append("failed to send message"+ "\n");
+                Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            appendS("Make sure the message is between 1 to 236 characters long.", Color.RED, true);
+            //textArea.append("The message needs to have a maximum of 236 characters" + "\n");
         }
+        
         
     }//GEN-LAST:event_sendBtnActionPerformed
 
@@ -258,26 +273,39 @@ Thread thread;
 
         if( thread != null){
          thread.stop();
-         textArea.append("Restarting server...\n");
+         appendS("Restarting server...", Color.GREEN, true);
+         //textArea.append("Restarting server...\n");
         }
         thread = new Thread("server thread") {
             public void run() {
                 
                 try {
-                    server = new Server(port, textArea);
+                    server = new Server(port, textPane);
                     server.listen();
                 } catch (IOException ex) {
                     Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
-                    textArea.append("Servier IOException,dammit\n");
+                    appendS("Servier IOException, dammit", Color.RED, true);
+                    //textArea.append("Servier IOException,dammit\n");
                 }
 
             }
         };
         thread.start();
-        textArea.append("Server listening:" + portTxt.getText()+"\n");
+        appendS("Server listening:" + portTxt.getText(), Color.GREEN, true);
+        //textArea.append("Server listening:" + portTxt.getText()+"\n");
         System.out.println("Server listening:" + portTxt.getText());
     }//GEN-LAST:event_listenBtnActionPerformed
-
+    
+    public void appendS(String s, Color color, boolean isBold) {
+        try {
+            SimpleAttributeSet keyWord = new SimpleAttributeSet();
+            StyleConstants.setForeground(keyWord, color);
+            StyleConstants.setBold(keyWord, isBold);
+            textPane.getDocument().insertString(textPane.getDocument().getLength(), s + "\n", keyWord);
+        } catch(BadLocationException exc) {
+            exc.printStackTrace();
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -323,12 +351,12 @@ Thread thread;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton listenBtn;
     private javax.swing.JTextField messageTxt;
     private javax.swing.JTextField portTuTxt;
     private javax.swing.JTextField portTxt;
     private javax.swing.JButton sendBtn;
-    private javax.swing.JTextArea textArea;
+    private javax.swing.JTextPane textPane;
     // End of variables declaration//GEN-END:variables
 }

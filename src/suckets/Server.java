@@ -5,6 +5,7 @@
  */
 package suckets;
 
+import java.awt.Color;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -12,7 +13,10 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import javax.swing.JTextArea;
+import javax.swing.JTextPane;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
 
 /**
  *
@@ -24,14 +28,14 @@ public class Server {
     ServerSocket ss;
     boolean stop;
     Socket s;
-    JTextArea area;
+    JTextPane textPane;
     DataInputStream din;
     DataOutputStream dout;
 
-    public Server(int port, JTextArea area) throws IOException {
+    public Server(int port, JTextPane textPane) throws IOException {
         stop = false;
         this.port = port;
-        this.area = area;
+        this.textPane = textPane;
         ss = new ServerSocket(port);
         s = ss.accept();
 
@@ -45,9 +49,11 @@ public class Server {
             try {
                 din.readFully(messageReceived);
                 String message = translate(messageReceived, 20);
-                area.append("Tu: " + message + "\n");
+                appendS("Tu: " + message, Color.BLACK, false);
+                //area.append("Tu: " + message + "\n");
             } catch (EOFException e) {
-                area.append("Stopped listening " + "\n");
+                appendS("Stopped listening", Color.RED, true);
+                //area.append("Stopped listening " + "\n");
                 stopServer();
                 break;
             }
@@ -79,6 +85,17 @@ public class Server {
             message = message + (char) messageIn[c];
         }
         return message;
+    }
+
+    public void appendS(String s, Color color, boolean isBold) {
+        try {
+            SimpleAttributeSet keyWord = new SimpleAttributeSet();
+            StyleConstants.setForeground(keyWord, color);
+            StyleConstants.setBold(keyWord, isBold);
+            textPane.getDocument().insertString(textPane.getDocument().getLength(), s + "\n", keyWord);
+        } catch(BadLocationException exc) {
+            exc.printStackTrace();
+        }
     }
 
 }
