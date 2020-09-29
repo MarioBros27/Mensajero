@@ -29,9 +29,8 @@ public class Window extends javax.swing.JFrame {
      * Creates new form Window
      */
     Server server;
-    Sender sender;
     Thread thread;
-    
+
     public Window() {
         initComponents();
     }
@@ -222,27 +221,40 @@ public class Window extends javax.swing.JFrame {
 
     private void connectBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connectBtnActionPerformed
         // TODO add your handling code here:
-        if (connectBtn.getText() != "Disconnect") {
 
-            int destPort = Integer.parseInt(portTuTxt.getText());
+        if (connectBtn.getText() == "Connect") {
             String destIP = ipTuTxt.getText();
-            try {
-                sender = new Sender(destIP, destPort);
-                appendS("Connected to: " + ipTuTxt.getText(), Color.GREEN, true);
-                connectBtn.setText("Disconnect");
-                sendBtn.setEnabled(true);
-                messageTxt.enable(true);
+            int destPort = Integer.parseInt(portTuTxt.getText());
 
-            } catch (IOException ex) {
-                Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            thread = new Thread("server thread") {
+                public void run() {
+
+                    try {
+                        server = new Server(destIP, destPort, textPane);
+                        server.connect();
+                    } catch (IOException ex) {
+                        Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
+                        appendS("Connection IOException, dammit", Color.RED, true);
+                    }
+
+                }
+            };
+            thread.start();
+
+            appendS("Connected to: " + ipTuTxt.getText(), Color.GREEN, true);
+            connectBtn.setText("Disconnect");
+            sendBtn.setEnabled(true);
+            messageTxt.enable(true);
+
         } else {
             try {
+                thread.stop();
+                appendS("Stopping Connection...", Color.GREEN, true);
                 connectBtn.setText("Connect");
-                sender.stopSender();
+                server.stopConnection();
                 sendBtn.setEnabled(false);
-                messageTxt.enable(false);
-                
+                messageTxt.setEnabled(false);
+
             } catch (IOException ex) {
                 Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -256,7 +268,7 @@ public class Window extends javax.swing.JFrame {
                 String message = messageTxt.getText();
                 appendS("Yo: " + message, Color.BLACK, false);
                 messageTxt.setText("");
-                sender.send(message);
+                server.send(message);
             } catch (IOException ex) {
                 appendS("Failed to send the message.", Color.RED, true);
                 Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
@@ -264,8 +276,8 @@ public class Window extends javax.swing.JFrame {
         } else {
             appendS("Make sure the message is between 1 to 236 characters long.", Color.RED, true);
         }
-        
-        
+
+
     }//GEN-LAST:event_sendBtnActionPerformed
 
     private void ipTuTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ipTuTxtActionPerformed
@@ -275,15 +287,16 @@ public class Window extends javax.swing.JFrame {
     private void listenBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listenBtnActionPerformed
         // TODO add your handling code here:
 
+        sendBtn.setEnabled(true);
+        messageTxt.setEnabled(true);
         int port = Integer.parseInt(portTxt.getText());
-
-        if( thread != null){
-         thread.stop();
-         appendS("Restarting server...", Color.GREEN, true);
+        if (thread != null) {
+            thread.stop();
+            appendS("Restarting server...", Color.GREEN, true);
         }
         thread = new Thread("server thread") {
             public void run() {
-                
+
                 try {
                     server = new Server(port, textPane);
                     server.listen();
@@ -300,21 +313,22 @@ public class Window extends javax.swing.JFrame {
     }//GEN-LAST:event_listenBtnActionPerformed
 
     private void messageTxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_messageTxtKeyPressed
-        if(evt.getKeyCode()==KeyEvent.VK_ENTER) {
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             sendBtn.doClick();
-        }     
+        }
     }//GEN-LAST:event_messageTxtKeyPressed
-    
+
     public void appendS(String s, Color color, boolean isBold) {
         try {
             SimpleAttributeSet keyWord = new SimpleAttributeSet();
             StyleConstants.setForeground(keyWord, color);
             StyleConstants.setBold(keyWord, isBold);
             textPane.getDocument().insertString(textPane.getDocument().getLength(), s + "\n", keyWord);
-        } catch(BadLocationException exc) {
+        } catch (BadLocationException exc) {
             exc.printStackTrace();
         }
     }
+
     /**
      * @param args the command line arguments
      */
@@ -341,7 +355,7 @@ public class Window extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Window.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
