@@ -5,44 +5,22 @@
  */
 package suckets;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.net.Socket;
-
 /**
  *
  * @author andres
  */
-public class Sender {
-
-//    String ip;
-//    int port;
-    Socket s;
-    DataOutputStream dout;
-
-
-    public Sender(String ip, int port) throws IOException {
-
-        s = new Socket(ip, port);
-        dout = new DataOutputStream(s.getOutputStream());
-
+public class Util {
+    
+    
+     public static String translate(byte[] messageIn, int off) {
+        String message = "";
+        int size = messageIn[9];
+        for (int c = off; c < off + size; c++) {
+            message = message + (char) messageIn[c];
+        }
+        return message;
     }
-
-    public void send(String message) throws IOException {
-
-        byte[] arr = getByteArray(message);
-        dout.write(arr,0,256);
-        dout.flush();
-    }
-
-    public void stopSender() throws IOException {
-        
-        dout.flush();
-        dout.close();
-        s.close();
-    }
-    private byte[] getByteArray(String message){
+       public static byte[] getByteArray(String message){
         char[] msg = message.toCharArray();
         byte[] arr = new byte[256];
         //ASCP

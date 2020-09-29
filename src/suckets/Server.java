@@ -5,6 +5,7 @@
  */
 package suckets;
 
+import java.awt.Color;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -12,7 +13,10 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import javax.swing.JTextArea;
+import javax.swing.JTextPane;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
 
 /**
  *
@@ -22,19 +26,30 @@ public class Server {
 
     int port;
     ServerSocket ss;
+    Socket regularSocket;
     boolean stop;
     Socket s;
-    JTextArea area;
+    JTextPane textPane;
     DataInputStream din;
     DataOutputStream dout;
 
-    public Server(int port, JTextArea area) throws IOException {
+    String ip;
+
+    public Server(int port, JTextPane textPane) throws IOException {
         stop = false;
         this.port = port;
-        this.area = area;
+        this.textPane = textPane;
         ss = new ServerSocket(port);
         s = ss.accept();
 
+    }
+
+    public Server(String ip, int port,JTextPane textPane) throws IOException {
+        stop = false;
+        this.port = port;
+        this.ip = ip;
+        this.textPane = textPane;
+        regularSocket = new Socket(ip, port);
     }
 
     public void listen() throws IOException {
@@ -44,10 +59,10 @@ public class Server {
             byte[] messageReceived = new byte[256];
             try {
                 din.readFully(messageReceived);
-                String message = translate(messageReceived, 20);
-                area.append("Tu: " + message + "\n");
+                String message = Util.translate(messageReceived, 20);
+                UIUtil.appendS(textPane,"Tu: " + message, Color.BLACK, false);
             } catch (EOFException e) {
-                area.append("Stopped listening " + "\n");
+                UIUtil.appendS(textPane,"Stopped listening", Color.RED, true);
                 stopServer();
                 break;
             }
@@ -56,14 +71,32 @@ public class Server {
 
     }
 
+    public void connect() throws IOException{
+        din = new DataInputStream(regularSocket.getInputStream());
+        dout = new DataOutputStream(regularSocket.getOutputStream());
+        while (!stop) {
+            byte[] messageReceived = new byte[256];
+            try {
+                din.readFully(messageReceived);
+                String message = Util.translate(messageReceived, 20);
+                UIUtil.appendS(textPane,"Tu: " + message, Color.BLACK, false);
+            } catch (EOFException e) {
+                UIUtil.appendS(textPane,"Connection interrupted", Color.RED, true);
+                stopConnection();
+                break;
+            }
+
+        }
+    }
     public void send(String message) throws IOException {
-        dout.writeUTF(message);
+        byte[] arr = Util.getByteArray(message);
+        dout.write(arr, 0, 256);
         dout.flush();
 
     }
 
     public void stopServer() throws IOException {
-        System.out.println("gonna close the server");
+        System.out.println("Server closed");
         stop = true;
 
         din.close();
@@ -72,13 +105,15 @@ public class Server {
         ss.close();
     }
 
-    String translate(byte[] messageIn, int off) {
-        String message = "";
-        int size = messageIn[9];
-        for (int c = off; c < off + size; c++) {
-            message = message + (char) messageIn[c];
-        }
-        return message;
+    public void stopConnection() throws IOException {
+        System.out.println("Closed connection");
+        stop = true;
+        din.close();
+        dout.flush();
+        dout.close();
+        regularSocket.close();
     }
+
+   
 
 }
