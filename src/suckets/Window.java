@@ -4,7 +4,9 @@
  * and open the template in the editor.
  */
 package suckets;
+
 import java.awt.Color;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 
 import javax.swing.text.StyledDocument;
@@ -29,6 +31,7 @@ public class Window extends javax.swing.JFrame {
     Server server;
     Sender sender;
     Thread thread;
+    
     public Window() {
         initComponents();
     }
@@ -83,7 +86,6 @@ public class Window extends javax.swing.JFrame {
             }
         });
 
-        messageTxt.setText("Escriba mensaje");
         messageTxt.setEnabled(false);
         messageTxt.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -123,6 +125,7 @@ public class Window extends javax.swing.JFrame {
             }
         });
 
+        textPane.setEditable(false);
         jScrollPane2.setViewportView(textPane);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -131,10 +134,10 @@ public class Window extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane2)
-                    .addComponent(messageTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 534, Short.MAX_VALUE))
-                .addGap(18, 30, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 534, Short.MAX_VALUE)
+                    .addComponent(messageTxt))
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -223,7 +226,6 @@ public class Window extends javax.swing.JFrame {
             try {
                 sender = new Sender(destIP, destPort);
                 appendS("Connected to: " + ipTuTxt.getText(), Color.GREEN, true);
-                //textArea.append("Connected to destination\n");
                 connectBtn.setText("Disconnect");
                 sendBtn.setEnabled(true);
                 messageTxt.enable(true);
@@ -250,17 +252,14 @@ public class Window extends javax.swing.JFrame {
                 // TODO add your handling code here:
                 String message = messageTxt.getText();
                 appendS("Yo: " + message, Color.BLACK, false);
-                //textArea.append("Yo: "+message+"\n");
                 messageTxt.setText("");
                 sender.send(message);
             } catch (IOException ex) {
                 appendS("Failed to send the message.", Color.RED, true);
-                //textArea.append("failed to send message"+ "\n");
                 Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             appendS("Make sure the message is between 1 to 236 characters long.", Color.RED, true);
-            //textArea.append("The message needs to have a maximum of 236 characters" + "\n");
         }
         
         
@@ -278,7 +277,6 @@ public class Window extends javax.swing.JFrame {
         if( thread != null){
          thread.stop();
          appendS("Restarting server...", Color.GREEN, true);
-         //textArea.append("Restarting server...\n");
         }
         thread = new Thread("server thread") {
             public void run() {
@@ -289,14 +287,12 @@ public class Window extends javax.swing.JFrame {
                 } catch (IOException ex) {
                     Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
                     appendS("Servier IOException, dammit", Color.RED, true);
-                    //textArea.append("Servier IOException,dammit\n");
                 }
 
             }
         };
         thread.start();
         appendS("Server listening: " + portTxt.getText(), Color.GREEN, true);
-        //textArea.append("Server listening:" + portTxt.getText()+"\n");
         System.out.println("Server listening:" + portTxt.getText());
     }//GEN-LAST:event_listenBtnActionPerformed
 
@@ -342,7 +338,7 @@ public class Window extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Window.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
