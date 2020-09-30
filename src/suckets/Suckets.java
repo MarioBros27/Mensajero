@@ -16,8 +16,9 @@ public class Suckets {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        Window w = new Window();
-        w.setVisible(true);
+//        Window w = new Window();
+        
+        Window.main(args);
         //w.listen();
     }
     
