@@ -44,39 +44,16 @@ public class Window extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        ipTxt = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        portTxt = new javax.swing.JTextField();
         connectBtn = new javax.swing.JButton();
         messageTxt = new javax.swing.JTextField();
         sendBtn = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         ipTuTxt = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
-        portTuTxt = new javax.swing.JTextField();
         listenBtn = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         textPane = new javax.swing.JTextPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jLabel1.setText("IP");
-
-        ipTxt.setEditable(false);
-        ipTxt.setText("127.0.0.1");
-        ipTxt.setEnabled(false);
-        ipTxt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ipTxtActionPerformed(evt);
-            }
-        });
-
-        jLabel2.setText("Port");
-
-        portTxt.setText("2020");
 
         connectBtn.setText("Connect");
         connectBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -85,7 +62,6 @@ public class Window extends javax.swing.JFrame {
             }
         });
 
-        messageTxt.setEnabled(false);
         messageTxt.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 messageTxtKeyPressed(evt);
@@ -93,18 +69,13 @@ public class Window extends javax.swing.JFrame {
         });
 
         sendBtn.setText("Send");
-        sendBtn.setEnabled(false);
         sendBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sendBtnActionPerformed(evt);
             }
         });
 
-        jLabel3.setText("Yo");
-
         jLabel4.setText("Tu");
-
-        jLabel5.setText("IP");
 
         ipTuTxt.setText("127.0.0.1");
         ipTuTxt.addActionListener(new java.awt.event.ActionListener() {
@@ -112,10 +83,6 @@ public class Window extends javax.swing.JFrame {
                 ipTuTxtActionPerformed(evt);
             }
         });
-
-        jLabel6.setText("Port");
-
-        portTuTxt.setText("2020");
 
         listenBtn.setText("Listen");
         listenBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -134,44 +101,28 @@ public class Window extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 534, Short.MAX_VALUE)
-                    .addComponent(messageTxt))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 547, Short.MAX_VALUE)
+                    .addComponent(messageTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 547, Short.MAX_VALUE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 80, Short.MAX_VALUE)
-                        .addComponent(jLabel4)
-                        .addGap(46, 46, 46))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(30, 30, 30)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(24, 24, 24)
-                                        .addComponent(jLabel3))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(ipTxt))))
-                            .addComponent(listenBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(portTuTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(sendBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(portTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(sendBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(6, 6, 6)
-                                .addComponent(ipTuTxt)))
-                        .addContainerGap(25, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(connectBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(ipTuTxt, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(connectBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                            .addComponent(jLabel4)
+                                            .addGap(53, 53, 53)))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(32, 32, 32)
+                                .addComponent(listenBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -184,53 +135,34 @@ public class Window extends javax.swing.JFrame {
                     .addComponent(sendBtn))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(ipTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(portTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(17, 17, 17)
                 .addComponent(listenBtn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ipTuTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(portTuTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(ipTuTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(connectBtn)
-                .addGap(101, 101, 101))
+                .addGap(227, 227, 227))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void ipTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ipTxtActionPerformed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_ipTxtActionPerformed
-
     private void connectBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connectBtnActionPerformed
         // TODO add your handling code here:
 
         if (connectBtn.getText() == "Connect") {
+            if (thread != null) {
+            thread.stop();
+        }
             String destIP = ipTuTxt.getText();
-            int destPort = Integer.parseInt(portTuTxt.getText());
 
             thread = new Thread("server thread") {
                 public void run() {
 
                     try {
-                        server = new Server(destIP, destPort, textPane);
+                        server = new Server(destIP, textPane);
                         server.connect();
                     } catch (IOException ex) {
                         Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
@@ -249,7 +181,7 @@ public class Window extends javax.swing.JFrame {
         } else {
             try {
                 thread.stop();
-                appendS("Stopping Connection...", Color.GREEN, true);
+                appendS("Stopped connection", Color.GREEN, true);
                 connectBtn.setText("Connect");
                 server.stopConnection();
                 sendBtn.setEnabled(false);
@@ -286,10 +218,11 @@ public class Window extends javax.swing.JFrame {
 
     private void listenBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listenBtnActionPerformed
         // TODO add your handling code here:
-
-        sendBtn.setEnabled(true);
-        messageTxt.setEnabled(true);
-        int port = Integer.parseInt(portTxt.getText());
+        listen();
+       
+    }//GEN-LAST:event_listenBtnActionPerformed
+    public void listen(){
+         
         if (thread != null) {
             thread.stop();
             appendS("Restarting server...", Color.GREEN, true);
@@ -298,20 +231,17 @@ public class Window extends javax.swing.JFrame {
             public void run() {
 
                 try {
-                    server = new Server(port, textPane);
-                    server.listen();
+                    server = new Server( textPane);
+                    server.listenForConnection();
                 } catch (IOException ex) {
                     Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
-                    appendS("Servier IOException, dammit", Color.RED, true);
+                    appendS("Servier IOException, junior disconnecte", Color.RED, true);
                 }
 
             }
         };
         thread.start();
-        appendS("Server listening: " + portTxt.getText(), Color.GREEN, true);
-        System.out.println("Server listening:" + portTxt.getText());
-    }//GEN-LAST:event_listenBtnActionPerformed
-
+    }
     private void messageTxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_messageTxtKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             sendBtn.doClick();
@@ -367,18 +297,10 @@ public class Window extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton connectBtn;
     private javax.swing.JTextField ipTuTxt;
-    private javax.swing.JTextField ipTxt;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton listenBtn;
     private javax.swing.JTextField messageTxt;
-    private javax.swing.JTextField portTuTxt;
-    private javax.swing.JTextField portTxt;
     private javax.swing.JButton sendBtn;
     private javax.swing.JTextPane textPane;
     // End of variables declaration//GEN-END:variables
