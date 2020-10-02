@@ -71,7 +71,6 @@ public class Ciphero {
             System.out.println(result[a]);
             a++;
         }
-        System.out.println("size " + a);
         return result;
     }
     //Codigo para convertir bajado de https://www.baeldung.com/java-byte-arrays-hex-strings
