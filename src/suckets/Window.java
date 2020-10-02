@@ -184,7 +184,7 @@ public class Window extends javax.swing.JFrame {
                 public void run() {
 
                     try {
-                        server = new Server(destIP, textPane, encrypted.isSelected(), keyTxt.getText());
+                        server = new Server(destIP, textPane, encrypted.isSelected(), keyTxt.getText(), encrypted.isSelected());
                         server.connect();
                     } catch (IOException ex) {
                         Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
@@ -253,7 +253,7 @@ public class Window extends javax.swing.JFrame {
             public void run() {
 
                 try {
-                    server = new Server(textPane,keyTxt.getText());
+                    server = new Server(textPane,keyTxt.getText(), encrypted.isSelected());
                     server.listenForConnection();
                 } catch (IOException ex) {
                     Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);

@@ -46,20 +46,22 @@ public class Server {
     
     String ip;
 
-    public Server(JTextPane textPane, String key) throws IOException {
+    public Server(JTextPane textPane, String key, boolean encrypted) throws IOException {
         stop = false;
         this.textPane = textPane;
         this.key = key;
+        this.encrypted = encrypted;
 
     }
 
-    public Server(String ip, JTextPane textPane, boolean encrypted, String key) throws IOException {
-        this.encrypted = encrypted;
+    public Server(String ip, JTextPane textPane, boolean encrypted, String key, boolean encrypt) throws IOException {
+        this.encrypted = encrypt;
         stop = false;
         this.key = key;
         this.ip = ip;
         this.textPane = textPane;
         regularSocket = new Socket(ip, port);
+        
     }
 
     public void listenForConnection() throws IOException {
@@ -95,12 +97,13 @@ public class Server {
                     byte[] decrypted;
                     try {
                         decrypted = Ciphero.decipher(key, messageReceived);
+                        message = Util.translate(decrypted, 20);
                     } catch (Exception ex) {
                         Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                         UIUtil.appendS(textPane, "Error decrypting message\n", Color.RED, true);
                         continue;
                     }
-                    message = Util.translate(decrypted, 20);
+                    
                 }else{
                     message = Util.translate(messageReceived, 20);
                 }

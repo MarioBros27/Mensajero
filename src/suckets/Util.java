@@ -15,6 +15,7 @@ public class Util {
      public static String translate(byte[] messageIn, int off) {
         String message = "";
         int size = messageIn[9];
+        System.out.println("SIze:"+size);
         for (int c = off; c < off + size; c++) {
             message = message + (char) messageIn[c];
         }
