@@ -50,12 +50,23 @@ public class Ciphero {
     }
 
     private static byte[] getKeyInBytes(String key) {
+        System.out.println(key);
         char[] charA = key.toCharArray();
-        byte[] result = new byte[56];
-        for (int c = 0; c < 56; c++) {
-            String temp = "" + charA[c];
-            result[c] = (byte) Integer.parseInt(temp, 16);
+        byte[] result = new byte[8];
+        int a = 0;
+        for (int c = 0; c < 16; c+= 2) {
+            String temp = "" + charA[c]+ charA[c+1];
+            System.out.println(temp);
+            int resulto = Integer.parseInt(temp, 16);
+            if(resulto > 127){
+                result[a] = (byte) ((byte) (resulto - 128)*-1);
+            }else{
+                result[a] = (byte) resulto;
+            }
+            System.out.println(result[a]);
+            a++;
         }
+        System.out.println("size "+a);
         return result;
     }
 }

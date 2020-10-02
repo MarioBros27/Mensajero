@@ -13,8 +13,15 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
@@ -26,7 +33,7 @@ import javax.swing.text.StyleConstants;
  */
 public class Server {
 
-    int port = 2020;
+    int port = 3025;
     ServerSocket ss;
     Socket regularSocket;
     boolean stop;
@@ -39,7 +46,7 @@ public class Server {
     
     String ip;
 
-    public Server(JTextPane textPane) throws IOException {
+    public Server(JTextPane textPane, String key) throws IOException {
         stop = false;
         this.textPane = textPane;
         this.key = key;
@@ -49,6 +56,7 @@ public class Server {
     public Server(String ip, JTextPane textPane, boolean encrypted, String key) throws IOException {
         this.encrypted = encrypted;
         stop = false;
+        this.key = key;
         this.ip = ip;
         this.textPane = textPane;
         regularSocket = new Socket(ip, port);
@@ -141,9 +149,21 @@ public class Server {
     }
 
     public void send(String message) throws IOException {
-        byte[] arr = Util.getByteArray(message);
+        if(encrypted){
+            try {
+                byte[] arr = Util.getByteArray(message);
+                byte[] encrypted = Ciphero.encipher(key, arr);
+                dout.write(encrypted, 0, 256);
+                dout.flush();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            } 
+        }else{
+           byte[] arr = Util.getByteArray(message);
         dout.write(arr, 0, 256);
-        dout.flush();
+        dout.flush(); 
+        }
+        
 
     }
 public void closeSocket() throws IOException {

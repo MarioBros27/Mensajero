@@ -15,12 +15,9 @@ public class Suckets {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
-//        Window w = new Window();
-        
-        Window.main(args);
-        
-        //w.listen();
+        Window w = new Window();
+        w.setVisible(true);
+        //Window.main(args);
     }
     
 }
