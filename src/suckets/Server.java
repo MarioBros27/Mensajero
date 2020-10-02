@@ -33,7 +33,7 @@ import javax.swing.text.StyleConstants;
  */
 public class Server {
 
-    int port = 3025;
+    int port = 2020;
     ServerSocket ss;
     Socket regularSocket;
     boolean stop;
