@@ -33,7 +33,7 @@ import javax.swing.text.StyleConstants;
  */
 public class Server {
 
-    int port = 3025;
+    int port = 2020;
     ServerSocket ss;
     Socket regularSocket;
     boolean stop;
@@ -156,8 +156,6 @@ public class Server {
             try {
                 byte[] arr = Util.getByteArray(message);
                 byte[] encrypted = Ciphero.encipher(key, arr);
-                byte[]  decrypted = Ciphero.decipher(key, encrypted);
-                UIUtil.appendS(textPane, "Test: " + Util.translate(decrypted, 20), Color.BLACK, false);
                 dout.write(encrypted, 0, 256);
                 dout.flush();
             } catch (Exception ex) {
