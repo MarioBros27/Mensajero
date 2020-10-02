@@ -19,6 +19,7 @@ public class Suckets {
 //        Window w = new Window();
         
         Window.main(args);
+        
         //w.listen();
     }
     

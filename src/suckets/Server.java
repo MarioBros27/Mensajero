@@ -13,6 +13,8 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
@@ -32,16 +34,20 @@ public class Server {
     JTextPane textPane;
     DataInputStream din;
     DataOutputStream dout;
-
+    boolean encrypted;
+    String key;
+    
     String ip;
 
     public Server(JTextPane textPane) throws IOException {
         stop = false;
         this.textPane = textPane;
+        this.key = key;
 
     }
 
-    public Server(String ip, JTextPane textPane) throws IOException {
+    public Server(String ip, JTextPane textPane, boolean encrypted, String key) throws IOException {
+        this.encrypted = encrypted;
         stop = false;
         this.ip = ip;
         this.textPane = textPane;
@@ -76,7 +82,20 @@ public class Server {
             byte[] messageReceived = new byte[256];
             try {
                 din.readFully(messageReceived);
-                String message = Util.translate(messageReceived, 20);
+                String message;
+                 if(encrypted){
+                    byte[] decrypted;
+                    try {
+                        decrypted = Ciphero.decipher(key, messageReceived);
+                    } catch (Exception ex) {
+                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                        UIUtil.appendS(textPane, "Error decrypting message\n", Color.RED, true);
+                        continue;
+                    }
+                    message = Util.translate(decrypted, 20);
+                }else{
+                    message = Util.translate(messageReceived, 20);
+                }
                 UIUtil.appendS(textPane, "Tu: " + message, Color.BLACK, false);
             } catch (EOFException e) {
                 UIUtil.appendS(textPane, "Stopped listening", Color.RED, true);
@@ -97,7 +116,20 @@ public class Server {
             byte[] messageReceived = new byte[256];
             try {
                 din.readFully(messageReceived);
-                String message = Util.translate(messageReceived, 20);
+                String message;
+                 if(encrypted){
+                    byte[] decrypted;
+                    try {
+                        decrypted = Ciphero.decipher(key, messageReceived);
+                    } catch (Exception ex) {
+                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                        UIUtil.appendS(textPane, "Error decrypting message\n", Color.RED, true);
+                        continue;
+                    }
+                    message = Util.translate(decrypted, 20);
+                }else{
+                    message = Util.translate(messageReceived, 20);
+                }
                 UIUtil.appendS(textPane, "Tu: " + message, Color.BLACK, false);
             } catch (EOFException e) {
                 UIUtil.appendS(textPane, "Connection interrupted", Color.RED, true);
