@@ -80,7 +80,7 @@ public class Window extends javax.swing.JFrame {
 
         jLabel4.setText("Tu");
 
-        ipTuTxt.setText("127.0.0.1");
+        ipTuTxt.setText("13.57.9.228");
         ipTuTxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ipTuTxtActionPerformed(evt);
@@ -115,8 +115,7 @@ public class Window extends javax.swing.JFrame {
                             .addComponent(messageTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 548, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(49, 49, 49)
-                        .addComponent(keyTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 462, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(keyTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 462, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(30, 30, 30)
@@ -280,15 +279,6 @@ public class Window extends javax.swing.JFrame {
             exc.printStackTrace();
         }
     }
-    
-//    public void generateKey(){
-//        Random rand = new Random();
-//        for(int c = 0; c<16; c++){
-//            int random = rand.nextInt(15);
-//            String letter = Integer.toHexString(random);
-//            keyArea.append(letter);
-//        }
-//    }
 
     /**
      * @param args the command line arguments
