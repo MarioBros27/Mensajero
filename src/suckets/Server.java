@@ -13,6 +13,15 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
@@ -24,7 +33,7 @@ import javax.swing.text.StyleConstants;
  */
 public class Server {
 
-    int port = 2020;
+    int port = 3025;
     ServerSocket ss;
     Socket regularSocket;
     boolean stop;
@@ -32,20 +41,27 @@ public class Server {
     JTextPane textPane;
     DataInputStream din;
     DataOutputStream dout;
-
+    boolean encrypted;
+    String key;
+    
     String ip;
 
-    public Server(JTextPane textPane) throws IOException {
+    public Server(JTextPane textPane, String key, boolean encrypted) throws IOException {
         stop = false;
         this.textPane = textPane;
+        this.key = key;
+        this.encrypted = encrypted;
 
     }
 
-    public Server(String ip, JTextPane textPane) throws IOException {
+    public Server(String ip, JTextPane textPane, boolean encrypted, String key, boolean encrypt) throws IOException {
+        this.encrypted = encrypt;
         stop = false;
+        this.key = key;
         this.ip = ip;
         this.textPane = textPane;
         regularSocket = new Socket(ip, port);
+        
     }
 
     public void listenForConnection() throws IOException {
@@ -76,7 +92,21 @@ public class Server {
             byte[] messageReceived = new byte[256];
             try {
                 din.readFully(messageReceived);
-                String message = Util.translate(messageReceived, 20);
+                String message;
+                 if(encrypted){
+                    byte[] decrypted;
+                    try {
+                        decrypted = Ciphero.decipher(key, messageReceived);
+                        message = Util.translate(decrypted, 20);
+                    } catch (Exception ex) {
+                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                        UIUtil.appendS(textPane, "Error decrypting message\n", Color.RED, true);
+                        continue;
+                    }
+                    
+                }else{
+                    message = Util.translate(messageReceived, 20);
+                }
                 UIUtil.appendS(textPane, "Tu: " + message, Color.BLACK, false);
             } catch (EOFException e) {
                 UIUtil.appendS(textPane, "Stopped listening", Color.RED, true);
@@ -97,7 +127,20 @@ public class Server {
             byte[] messageReceived = new byte[256];
             try {
                 din.readFully(messageReceived);
-                String message = Util.translate(messageReceived, 20);
+                String message;
+                 if(encrypted){
+                    byte[] decrypted;
+                    try {
+                        decrypted = Ciphero.decipher(key, messageReceived);
+                    } catch (Exception ex) {
+                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                        UIUtil.appendS(textPane, "Error decrypting message\n", Color.RED, true);
+                        continue;
+                    }
+                    message = Util.translate(decrypted, 20);
+                }else{
+                    message = Util.translate(messageReceived, 20);
+                }
                 UIUtil.appendS(textPane, "Tu: " + message, Color.BLACK, false);
             } catch (EOFException e) {
                 UIUtil.appendS(textPane, "Connection interrupted", Color.RED, true);
@@ -109,9 +152,23 @@ public class Server {
     }
 
     public void send(String message) throws IOException {
-        byte[] arr = Util.getByteArray(message);
+        if(encrypted){
+            try {
+                byte[] arr = Util.getByteArray(message);
+                byte[] encrypted = Ciphero.encipher(key, arr);
+                byte[]  decrypted = Ciphero.decipher(key, encrypted);
+                UIUtil.appendS(textPane, "Test: " + Util.translate(decrypted, 20), Color.BLACK, false);
+                dout.write(encrypted, 0, 256);
+                dout.flush();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            } 
+        }else{
+           byte[] arr = Util.getByteArray(message);
         dout.write(arr, 0, 256);
-        dout.flush();
+        dout.flush(); 
+        }
+        
 
     }
 public void closeSocket() throws IOException {
