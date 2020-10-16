@@ -14,9 +14,17 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.swing.JTextPane;
 
 public class Server {
@@ -37,7 +45,7 @@ public class Server {
 //    BigInteger q;
 //    BigInteger a;
     String myY;
-    
+
 //    BigInteger yourY;
     BigInteger myX;
     BigInteger key;
@@ -61,9 +69,10 @@ public class Server {
                 UIUtil.appendS(textPane, "Waiting for someone to connect...", Color.GREEN, true);
                 s = ss.accept();
                 din = new DataInputStream(s.getInputStream());
+                dout = new DataOutputStream(s.getOutputStream());
                 if (readCredentials()) {
                     sendHandshakeBack();
-                    dout = new DataOutputStream(s.getOutputStream());
+
                     UIUtil.appendS(textPane, "Connection encrypted with: " + s.getRemoteSocketAddress().toString(), Color.GREEN, true);
                     listen();
                 } else {
@@ -91,6 +100,7 @@ public class Server {
                 List<BigInteger> credentials = Ciphero.gimmemyKeys(new BigInteger(qValue), new BigInteger(aValue), new BigInteger(yValue));
                 myY = credentials.get(0).toString();
                 key = credentials.get(1);
+                System.out.println("My key is: "+key.toString());
                 return true;
 
             } else {
@@ -105,9 +115,9 @@ public class Server {
     }
 
     public void sendHandshakeBack() {
-        String message = "q=" + q + "a=" + a + "y=" + myY;
+        String message = "q=" + q + ",a=" + a + ",y=" + myY;
         try {
-            this.sendMessage(message, (byte) 3, true);
+            this.sendMessage(message, (byte) 3, false);
         } catch (IOException ex) {
             System.out.println("error at sendhansdhakeback");
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
@@ -151,7 +161,7 @@ public class Server {
         if (this.areCredentialsOK() == false) {
 
             UIUtil.appendS(textPane, "credentials that you sent don't match, read logs", Color.RED, true);
-        }else{
+        } else {
             UIUtil.appendS(textPane, "Succesfully encrypted connection!", Color.GREEN, true);
         }
 
@@ -182,10 +192,10 @@ public class Server {
     }
 
     private void sendHandshake() {
-        List <BigInteger> list = Ciphero.gimmemyXY(new BigInteger(q), new BigInteger(a));
+        List<BigInteger> list = Ciphero.gimmemyXY(new BigInteger(q), new BigInteger(a));
         myX = list.get(0);
         myY = list.get(1).toString();
-        String message = "q=" + q + "a=" + a + "y=" + myY;
+        String message = "q=" + q + ",a=" + a + ",y=" + myY;
         try {
             this.sendMessage(message, (byte) 2, false);
         } catch (IOException ex) {
@@ -199,26 +209,35 @@ public class Server {
         UIUtil.appendS(textPane, "Sent you mine waiting for yours..", Color.yellow, true);
         try {
             din.readFully(messageReceived);
-            String message = Util.translate(messageReceived);
+            
+            try {
 
-            String qValue = Util.getHellman(message, 'q');
-            String aValue = Util.getHellman(message, 'a');
-            String yValue = Util.getHellman(message, 'y');
-            if (qValue.equals(q) && aValue.equals(a)) {
-                BigInteger yB = new BigInteger(yValue);
-                
-                key = yB.modPow(myX, new BigInteger(q));
-                return true;
+                String message = Util.translate(messageReceived);
+                String qValue = Util.getHellman(message, 'q');
+                String aValue = Util.getHellman(message, 'a');
+                String yValue = Util.getHellman(message, 'y');
+                if (qValue.equals(q) && aValue.equals(a)) {
+                    BigInteger yB = new BigInteger(yValue);
 
-            } else {
-                System.out.println("Q and A don't match: Q: " + qValue + "A: " + aValue);
-                return false;
+                    key = yB.modPow(myX, new BigInteger(q));
+                    System.out.println("My key is: "+key.toString());
+                    return true;
+
+                } else {
+                    System.out.println("Q and A don't match: Q: " + qValue + "A: " + aValue);
+                    return false;
+                }
+
+            } catch (Exception ex) {
+                System.out.println("Couldn't decipher at areCredentialsOK");
+                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         } catch (IOException ex) {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
+        return false;
     }
 
     public void sendMessage(String message, byte function, boolean encrypted) throws IOException {
@@ -226,6 +245,7 @@ public class Server {
             byte[] arr = Util.getByteArray(message, function);
             if (encrypted) {
                 byte[] encryptedText = Ciphero.encipher(key, arr);
+                System.out.println("sendMessage from server text: " + Arrays.toString(encryptedText));
                 dout.write(encryptedText, 0, 256);
             } else {
                 dout.write(arr, 0, 256);;
