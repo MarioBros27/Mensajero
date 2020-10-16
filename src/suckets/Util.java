@@ -5,6 +5,8 @@
  */
 package suckets;
 
+import java.awt.Color;
+
 /**
  *
  * @author andres
@@ -12,16 +14,38 @@ package suckets;
 public class Util {
     
     
-     public static String translate(byte[] messageIn, int off) {
+     public static String translate(byte[] messageIn) {
+         int off = 20;
         String message = "";
-        int size = messageIn[9];
-        System.out.println("SIze:"+size);
+        int size = messageIn[9] & 255;
+        System.out.println("Size:"+size);
         for (int c = off; c < off + size; c++) {
             message = message + (char) messageIn[c];
         }
         return message;
     }
-       public static byte[] getByteArray(String message){
+    public static String getHellman(String message, char value){
+        String returnS = "";
+        char[] arr = message.toCharArray();
+        int index = 0;
+        for(int c = 0; c< message.length(); c++){
+            if(arr[c]== value && arr[c+1]=='='){
+                index = c+2;
+            }else{
+                
+                System.out.println("error in getHellman: incorrect stream sent");
+                System.out.println("message was: "+ message);
+            }
+                
+        }
+        for(int c = index; arr[c]!= ',' &&c <message.length();c++){
+            returnS = returnS + arr[c];
+        }
+        return returnS;
+        
+    }
+     
+       public static byte[] getByteArray(String message, byte function){
         char[] msg = message.toCharArray();
         byte[] arr = new byte[256];
         //ASCP
@@ -39,7 +63,7 @@ public class Util {
         arr[9] = (byte) msg.length;
         //Function
         arr[10] = 0;
-        arr[11] = 1;
+        arr[11] = function;
         //State
         arr[12] = 0;
         arr[13] = 0;

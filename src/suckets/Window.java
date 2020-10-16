@@ -48,15 +48,14 @@ public class Window extends javax.swing.JFrame {
         connectBtn = new javax.swing.JButton();
         messageTxt = new javax.swing.JTextField();
         sendBtn = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
         ipTuTxt = new javax.swing.JTextField();
         listenBtn = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         textPane = new javax.swing.JTextPane();
-        encrypted = new javax.swing.JCheckBox();
-        keyTxt = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(520, 400));
+        setResizable(false);
 
         connectBtn.setText("Connect");
         connectBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -78,15 +77,14 @@ public class Window extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setText("Tu");
-
-        ipTuTxt.setText("13.57.9.228");
+        ipTuTxt.setText("127.0.0.1");
         ipTuTxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ipTuTxtActionPerformed(evt);
             }
         });
 
+        listenBtn.setBackground(new java.awt.Color(0, 0, 0));
         listenBtn.setText("Listen");
         listenBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -95,76 +93,47 @@ public class Window extends javax.swing.JFrame {
         });
 
         textPane.setEditable(false);
+        textPane.setBackground(new java.awt.Color(0, 0, 0));
+        textPane.setForeground(new java.awt.Color(255, 255, 255));
         jScrollPane2.setViewportView(textPane);
-
-        encrypted.setSelected(true);
-        encrypted.setText("Encrypted");
-
-        keyTxt.setText("ffc7be0c3c4ec7f6");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2)
+                    .addComponent(messageTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 548, Short.MAX_VALUE)
-                            .addComponent(messageTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 548, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(49, 49, 49)
-                        .addComponent(keyTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 462, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(sendBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(40, 40, 40)
-                                .addComponent(jLabel4)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(ipTuTxt, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(listenBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(encrypted, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addContainerGap())))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(connectBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                    .addComponent(sendBtn)
+                    .addComponent(listenBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ipTuTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(connectBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(encrypted)
-                    .addComponent(keyTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(listenBtn)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
+                        .addContainerGap()
                         .addComponent(jScrollPane2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(messageTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(sendBtn))
-                        .addContainerGap())
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ipTuTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(94, 94, 94)
+                        .addComponent(listenBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(connectBtn)
-                        .addGap(227, 227, 227))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ipTuTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(messageTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(sendBtn))
+                .addContainerGap())
         );
 
         pack();
@@ -183,7 +152,7 @@ public class Window extends javax.swing.JFrame {
                 public void run() {
 
                     try {
-                        server = new Server(destIP, textPane, encrypted.isSelected(), keyTxt.getText(), encrypted.isSelected());
+                        server = new Server(destIP, textPane);
                         server.connect();
                     } catch (IOException ex) {
                         Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
@@ -219,9 +188,9 @@ public class Window extends javax.swing.JFrame {
             try {
                 // TODO add your handling code here:
                 String message = messageTxt.getText();
-                appendS("Yo: " + message, Color.BLACK, false);
+                appendS("Yo: " + message, Color.WHITE, false);
                 messageTxt.setText("");
-                server.send(message);
+                server.sendMessage(message,(byte)1,true);
             } catch (IOException ex) {
                 appendS("Failed to send the message.", Color.RED, true);
                 Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
@@ -236,12 +205,6 @@ public class Window extends javax.swing.JFrame {
     private void ipTuTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ipTuTxtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ipTuTxtActionPerformed
-
-    private void listenBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listenBtnActionPerformed
-        // TODO add your handling code here:
-        listen();
-       
-    }//GEN-LAST:event_listenBtnActionPerformed
     public void listen(){
          
         if (thread != null) {
@@ -252,7 +215,7 @@ public class Window extends javax.swing.JFrame {
             public void run() {
 
                 try {
-                    server = new Server(textPane,keyTxt.getText(), encrypted.isSelected());
+                    server = new Server(textPane);
                     server.listenForConnection();
                 } catch (IOException ex) {
                     Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
@@ -268,6 +231,12 @@ public class Window extends javax.swing.JFrame {
             sendBtn.doClick();
         }
     }//GEN-LAST:event_messageTxtKeyPressed
+
+    private void listenBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listenBtnActionPerformed
+        // TODO add your handling code here:
+        listen();
+
+    }//GEN-LAST:event_listenBtnActionPerformed
 
     public void appendS(String s, Color color, boolean isBold) {
         try {
@@ -317,11 +286,8 @@ public class Window extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton connectBtn;
-    private javax.swing.JCheckBox encrypted;
     private javax.swing.JTextField ipTuTxt;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField keyTxt;
     private javax.swing.JButton listenBtn;
     private javax.swing.JTextField messageTxt;
     private javax.swing.JButton sendBtn;
