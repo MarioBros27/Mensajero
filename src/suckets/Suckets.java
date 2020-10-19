@@ -5,6 +5,8 @@
  */
 package suckets;
 
+
+
 /**
  *
  * @author andres
@@ -14,10 +16,13 @@ public class Suckets {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        Window w = new Window();
-        w.setVisible(true);
-        //Window.main(args);
+    public static void main(String[] args)  {
+
+            Window w = new Window();
+            w.setVisible(true);
+        
+
     }
-    
+
+   
 }

@@ -15,6 +15,11 @@ import javax.swing.text.StyleConstants;
 
 import java.io.EOFException;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.Collections;
+import java.util.Enumeration;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,8 +39,33 @@ public class Window extends javax.swing.JFrame {
 
     public Window() {
         initComponents();
+        try {
+            printIPs();
+        } catch (SocketException ex) {
+            Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
+    void printIPs() throws SocketException{
+        Enumeration<NetworkInterface> nets = NetworkInterface.getNetworkInterfaces();
+        for (NetworkInterface netint : Collections.list(nets)) {
+            displayInterfaceInformation(netint);
+        }
+    }
+    void displayInterfaceInformation(NetworkInterface netint) throws SocketException {
+//        UIUtil.appendS(tx2,"Display name: "+ netint.getDisplayName(), Color.WHITE,false);
+//        UIUtil.appendS(tx2,"Name: " +netint.getName(), Color.WHITE,false);
+        Enumeration<InetAddress> inetAddresses = netint.getInetAddresses();
+        for (InetAddress inetAddress : Collections.list(inetAddresses)) {
+            String add = inetAddress.toString();
+            char[] arr = add.toCharArray();
+            if(arr[1]=='1'&&arr[2]=='7'&&arr[3]=='2'){
+                System.out.println("I'm here perro");
+                UIUtil.appendS(textPane,"Mi IP: "+add,Color.PINK,false);
+            }
+            
+        }
 
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -166,7 +196,7 @@ public class Window extends javax.swing.JFrame {
             appendS("Connected to: " + ipTuTxt.getText(), Color.GREEN, true);
             connectBtn.setText("Disconnect");
             sendBtn.setEnabled(true);
-            messageTxt.enable(true);
+            messageTxt.setEnabled(true);
 
         } else {
             try {
@@ -186,7 +216,6 @@ public class Window extends javax.swing.JFrame {
     private void sendBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendBtnActionPerformed
         if (messageTxt.getText().length() <= 236 && messageTxt.getText().length() > 0) {
             try {
-                // TODO add your handling code here:
                 String message = messageTxt.getText();
                 appendS("Yo: " + message, Color.WHITE, false);
                 messageTxt.setText("");

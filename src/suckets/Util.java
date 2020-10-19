@@ -5,7 +5,6 @@
  */
 package suckets;
 
-import java.awt.Color;
 
 /**
  *
