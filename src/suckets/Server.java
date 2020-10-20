@@ -88,11 +88,13 @@ public class Server {
             String qValue = Util.getHellman(message, 'q');
             String aValue = Util.getHellman(message, 'a');
             String yValue = Util.getHellman(message, 'y');
-            if (qValue.equals(q) && aValue.equals(a)) {
+            byte function = messageReceived[11];
+            System.out.println("fuction exp 2 but got " + function);
+            if (qValue.equals(q) && aValue.equals(a) && function == 2) {
                 List<BigInteger> credentials = Ciphero.gimmemyKeys(new BigInteger(qValue), new BigInteger(aValue), new BigInteger(yValue));
                 myY = credentials.get(0).toString();
                 key = credentials.get(1);
-                System.out.println("My key is: "+key.toString());
+                System.out.println("My key is: " + key.toString());
                 return true;
 
             } else {
@@ -201,18 +203,20 @@ public class Server {
         UIUtil.appendS(textPane, "Sent you mine waiting for yours..", Color.yellow, true);
         try {
             din.readFully(messageReceived);
-            
+
             try {
 
                 String message = Util.translate(messageReceived);
                 String qValue = Util.getHellman(message, 'q');
                 String aValue = Util.getHellman(message, 'a');
                 String yValue = Util.getHellman(message, 'y');
-                if (qValue.equals(q) && aValue.equals(a)) {
+                byte function = messageReceived[11];
+                System.out.println("fuction exp 3 but got " + function);
+                if (qValue.equals(q) && aValue.equals(a) && function == 3) {
                     BigInteger yB = new BigInteger(yValue);
 
                     key = yB.modPow(myX, new BigInteger(q));
-                    System.out.println("My key is: "+key.toString());
+                    System.out.println("My key is: " + key.toString());
                     return true;
 
                 } else {

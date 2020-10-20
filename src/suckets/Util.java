@@ -62,6 +62,8 @@ public class Util {
         arr[8] = 1;
         //Size
         arr[9] = (byte) msg.length;
+        System.out.println("Size: "+arr[9]);
+        System.out.println("funcion"+function);
         //Function
         arr[10] = 0;
         arr[11] = function;
