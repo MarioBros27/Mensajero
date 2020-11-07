@@ -17,6 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JCheckBox;
 import javax.swing.JTextPane;
 
 public class Server {
@@ -41,17 +42,19 @@ public class Server {
 //    BigInteger yourY;
     BigInteger myX;
     BigInteger key;
-
-    public Server(JTextPane textPane) throws IOException {
+    JCheckBox box;
+    public Server(JTextPane textPane, JCheckBox box) throws IOException {
         stop = false;
         this.textPane = textPane;
+        this.box = box;
     }
 
-    public Server(String ip, JTextPane textPane) throws IOException {
+    public Server(String ip, JTextPane textPane,JCheckBox box) throws IOException {
         stop = false;
         this.ip = ip;
         this.textPane = textPane;
         regularSocket = new Socket(ip, port);
+        this.box = box;
     }
 
     public void listenForConnection() throws IOException {
@@ -129,6 +132,7 @@ public class Server {
                 byte[] decrypted;
                 try {
                     decrypted = Ciphero.decipher(key, messageReceived);
+                    if(decrypted[9]=='0') continue;
                     message = Util.translate(decrypted);
                 } catch (Exception ex) {
                     Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
@@ -168,6 +172,7 @@ public class Server {
                 byte[] decrypted;
                 try {
                     decrypted = Ciphero.decipher(key, messageReceived);
+                    if(decrypted[9]=='0')continue;
                 } catch (Exception ex) {
                     Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                     UIUtil.appendS(textPane, "Error decrypting message\n", Color.RED, true);
@@ -238,7 +243,7 @@ public class Server {
 
     public void sendMessage(String message, byte function, boolean encrypted) throws IOException {
         try {
-            byte[] arr = Util.getByteArray(message, function);
+            byte[] arr = Util.getByteArray(message, function,box);
             if (encrypted) {
                 byte[] encryptedText = Ciphero.encipher(key, arr);
                 System.out.println("sendMessage from server text: " + Arrays.toString(encryptedText));

@@ -82,6 +82,7 @@ public class Window extends javax.swing.JFrame {
         listenBtn = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         textPane = new javax.swing.JTextPane();
+        macbox = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(520, 400));
@@ -127,6 +128,8 @@ public class Window extends javax.swing.JFrame {
         textPane.setForeground(new java.awt.Color(255, 255, 255));
         jScrollPane2.setViewportView(textPane);
 
+        macbox.setText("incorrect MAC");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -138,11 +141,16 @@ public class Window extends javax.swing.JFrame {
                     .addComponent(messageTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(sendBtn)
-                    .addComponent(listenBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ipTuTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(connectBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(sendBtn)
+                            .addComponent(listenBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ipTuTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(connectBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(macbox))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -159,7 +167,9 @@ public class Window extends javax.swing.JFrame {
                         .addComponent(connectBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ipTuTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(macbox)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(messageTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(sendBtn))
@@ -182,7 +192,7 @@ public class Window extends javax.swing.JFrame {
                 public void run() {
 
                     try {
-                        server = new Server(destIP, textPane);
+                        server = new Server(destIP, textPane,macbox);
                         server.connect();
                     } catch (IOException ex) {
                         Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
@@ -244,7 +254,7 @@ public class Window extends javax.swing.JFrame {
             public void run() {
 
                 try {
-                    server = new Server(textPane);
+                    server = new Server(textPane,macbox);
                     server.listenForConnection();
                 } catch (IOException ex) {
                     Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
@@ -318,6 +328,7 @@ public class Window extends javax.swing.JFrame {
     private javax.swing.JTextField ipTuTxt;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton listenBtn;
+    private javax.swing.JCheckBox macbox;
     private javax.swing.JTextField messageTxt;
     private javax.swing.JButton sendBtn;
     private javax.swing.JTextPane textPane;
