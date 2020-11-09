@@ -1,0 +1,116 @@
+[33mcommit 945b0b4d9350223136ef5a0323f3301a681f416d[m[33m ([m[1;36mHEAD -> [m[1;32mencryptedtwo[m[33m, [m[1;31morigin/encryptedtwo[m[33m)[m
+Author: Alejandro Aguiano <alex1203@live.com.mx>
+Date:   Fri Oct 2 04:46:07 2020 -0600
+
+    Encryption integrated
+
+[33mcommit 0b81bfba44675a29321edfe64ea31ab5019371dc[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m
+Merge: 99f3850 de3d44e
+Author: MarioBros27 <33326714+MarioBros27@users.noreply.github.com>
+Date:   Wed Sep 30 10:36:38 2020 -0600
+
+    Merge pull request #3 from MarioBros27/fixes
+    
+    fixed UI run main
+
+[33mcommit de3d44ed6ede47af010c7e266310c7c7d83b46eb[m[33m ([m[1;31morigin/fixes[m[33m)[m
+Author: Mario <a01187827@itesm.mx>
+Date:   Wed Sep 30 10:32:02 2020 -0600
+
+    fixed UI run main
+
+[33mcommit 99f385020a8030cd00137971fe0c8c12236d06bc[m
+Merge: 9eb7385 45864fd
+Author: MarioBros27 <33326714+MarioBros27@users.noreply.github.com>
+Date:   Wed Sep 30 09:24:19 2020 -0600
+
+    Merge pull request #2 from MarioBros27/fixes
+    
+    Cleaned UI
+
+[33mcommit 45864fdeb4da466e9c8555064e55b258027868b4[m
+Author: Mario <a01187827@itesm.mx>
+Date:   Tue Sep 29 17:59:47 2020 -0600
+
+    idn
+
+[33mcommit 9eb738542efe070243919ffa76ee70b86973c8dd[m
+Merge: 1a86c6b c37f300
+Author: MarioBros27 <33326714+MarioBros27@users.noreply.github.com>
+Date:   Tue Sep 29 16:17:24 2020 -0600
+
+    Merge pull request #1 from MarioBros27/fixes
+    
+    Fixes
+
+[33mcommit c37f30074a07e3968738b84191b220bc5baea19f[m[33m ([m[1;32mfixes[m[33m)[m
+Author: Mario <a01187827@itesm.mx>
+Date:   Tue Sep 29 15:33:20 2020 -0600
+
+    removed second socket
+
+[33mcommit 663c6b983c7b9e89561c4b37331a857a884462e9[m
+Author: Mario <a01187827@itesm.mx>
+Date:   Tue Sep 29 10:51:44 2020 -0600
+
+    fixed connect button and port resizing issued
+
+[33mcommit 1a86c6b7b57ee827fe17713ebbe30d400dccd5a8[m
+Author: AlexAnguianoG <36306013+AlexAnguianoG@users.noreply.github.com>
+Date:   Tue Sep 29 00:21:14 2020 -0600
+
+    Create README.md
+
+[33mcommit 7f97be7e5b882bc90d96cfdd5aa4c5e8f7316b9d[m
+Author: Alejandro Aguiano <alex1203@live.com.mx>
+Date:   Mon Sep 28 22:57:44 2020 -0600
+
+    Fixes done
+
+[33mcommit fb8cd15db54a4695a4bd0790a42474bd7a7eb73d[m
+Author: Alejandro Aguiano <alex1203@live.com.mx>
+Date:   Mon Sep 28 15:02:26 2020 -0600
+
+    Trigger send button on Enter key
+
+[33mcommit 0183abd8a7d48efba4f8be9da81fc8447fcc379b[m
+Author: Alejandro Aguiano <alex1203@live.com.mx>
+Date:   Mon Sep 28 14:46:43 2020 -0600
+
+    Components resized
+
+[33mcommit 869d10858449dfa9aa53699a34bdaab2478ca984[m
+Author: Alejandro Aguiano <alex1203@live.com.mx>
+Date:   Mon Sep 28 13:50:27 2020 -0600
+
+    TexArea changed to TextPane
+
+[33mcommit 82b8caea2907528b5f7818f87f602920eeaef605[m
+Author: Mario <a01187827@itesm.mx>
+Date:   Sat Sep 26 13:17:19 2020 -0600
+
+    missed to add something
+
+[33mcommit e9e47ec6bdab95a6e08738cfec2edbb37ab13879[m
+Author: Mario <a01187827@itesm.mx>
+Date:   Sat Sep 26 13:14:08 2020 -0600
+
+    fixed bug when other disconnects
+
+[33mcommit a675fbba6e8d26500e63189598e660452a6b2c58[m
+Author: Mario <a01187827@itesm.mx>
+Date:   Wed Sep 23 15:47:28 2020 -0600
+
+    cleaned again
+
+[33mcommit 4d53ff22b131060e4ed48317c14925ba78b23c02[m
+Author: Mario <a01187827@itesm.mx>
+Date:   Wed Sep 23 15:46:56 2020 -0600
+
+    cleaned
+
+[33mcommit e48af06abe87d329b489d34408d3ee0ccc9cefd4[m
+Author: Mario <a01187827@itesm.mx>
+Date:   Tue Sep 22 23:48:44 2020 -0600
+
+    init

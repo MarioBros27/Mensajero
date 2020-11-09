@@ -5,6 +5,10 @@
  */
 package suckets;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.math.BigInteger;
+import java.util.Arrays;
 
 /**
  *
@@ -20,6 +24,34 @@ public class Util {
         for (int c = off; c < off + size&& c<235; c++) {
             message = message + (char) messageIn[c];
         }
+        
+        if(messageIn[11] == 1){
+            byte[] data = new byte[236];
+            byte[] macToCompare = new byte[20];
+            byte[] macInMessage = new byte[20];
+            
+            for (int c = 0; c < 236; c++) {
+                data[c] = messageIn[c];
+            }
+            
+            for (int c = 236; c < 256; c++) {
+                macInMessage[c - 236] = messageIn[c];
+            }
+                        
+            try {
+                macToCompare = SHA1(data);
+            } catch (NoSuchAlgorithmException e) {  
+                System.out.println("Exception thrown for incorrect algorithm: " + e); 
+            }
+            if(!Arrays.equals(macInMessage, macToCompare)){
+                System.out.println("INCORRECT");
+                return "";              
+            }
+            System.out.println("SHA1 inMssg: " + toHexString(macInMessage));
+            System.out.println("SHA1 toComp: " + toHexString(macToCompare));
+            
+        }
+        
         return message;
     }
 
@@ -45,8 +77,25 @@ public class Util {
             return returnS;
 
     }
+    
+    public static byte[] SHA1(byte[] convertme) throws NoSuchAlgorithmException{
+        MessageDigest md = MessageDigest.getInstance("SHA-1"); 
+        return md.digest(convertme);
+    }
+    
+    public static String toHexString(byte[] hash) 
+    { 
+        BigInteger number = new BigInteger(1, hash); 
+        StringBuilder hexString = new StringBuilder(number.toString(16));  
+        while (hexString.length() < 32)  
+        {  
+            hexString.insert(0, '0');  
+        }  
+  
+        return hexString.toString();  
+    } 
 
-    public static byte[] getByteArray(String message, byte function) {
+    public static byte[] getByteArray(String message, byte function, boolean incorrectMAC) {
         char[] msg = message.toCharArray();
         byte[] arr = new byte[256];
         //ASCP
@@ -75,10 +124,30 @@ public class Util {
         arr[17] = 0;
         arr[18] = 0;
         arr[19] = 0;
+        //DATA
         for (int c = 20; c < 20 + msg.length; c++) {
             arr[c] = (byte) msg[c - 20];
         }
-
+        //MAC
+        if(function == 1 && !incorrectMAC){
+            byte[] data = new byte[236];
+            byte[] mc = new byte[20];
+            
+            for (int c = 0; c < 236; c++) {
+                data[c] = arr[c];
+            }
+                        
+            try {
+                mc = SHA1(data);
+                System.out.println("SHA1: " + toHexString(mc));
+                for (int c = 236; c < 256; c++) {
+                    arr[c] = mc[c - 236];
+                }
+            } catch (NoSuchAlgorithmException e) {  
+                System.out.println("Exception thrown for incorrect algorithm: " + e); 
+            }
+        }
+                
         return arr;
     }
 }

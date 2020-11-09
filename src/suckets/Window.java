@@ -82,6 +82,7 @@ public class Window extends javax.swing.JFrame {
         listenBtn = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         textPane = new javax.swing.JTextPane();
+        macChBx = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(520, 400));
@@ -127,6 +128,9 @@ public class Window extends javax.swing.JFrame {
         textPane.setForeground(new java.awt.Color(255, 255, 255));
         jScrollPane2.setViewportView(textPane);
 
+        macChBx.setText("Incorrect MAC?");
+        macChBx.setActionCommand("Incorrect MAC?");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -141,7 +145,8 @@ public class Window extends javax.swing.JFrame {
                     .addComponent(sendBtn)
                     .addComponent(listenBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ipTuTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(connectBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(connectBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(macChBx))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -150,8 +155,7 @@ public class Window extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                        .addComponent(jScrollPane2))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(94, 94, 94)
                         .addComponent(listenBtn)
@@ -159,7 +163,9 @@ public class Window extends javax.swing.JFrame {
                         .addComponent(connectBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ipTuTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                        .addComponent(macChBx)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(messageTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(sendBtn))
@@ -182,7 +188,7 @@ public class Window extends javax.swing.JFrame {
                 public void run() {
 
                     try {
-                        server = new Server(destIP, textPane);
+                        server = new Server(destIP, textPane, macChBx);
                         server.connect();
                     } catch (IOException ex) {
                         Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
@@ -214,7 +220,7 @@ public class Window extends javax.swing.JFrame {
     }//GEN-LAST:event_connectBtnActionPerformed
 
     private void sendBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendBtnActionPerformed
-        if (messageTxt.getText().length() <= 236 && messageTxt.getText().length() > 0) {
+        if (messageTxt.getText().length() <= 216 && messageTxt.getText().length() > 0) {
             try {
                 String message = messageTxt.getText();
                 appendS("Yo: " + message, Color.WHITE, false);
@@ -225,7 +231,7 @@ public class Window extends javax.swing.JFrame {
                 Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            appendS("Make sure the message is between 1 to 236 characters long.", Color.RED, true);
+            appendS("Make sure the message is between 1 to 216 characters long.", Color.RED, true);
         }
 
 
@@ -244,7 +250,7 @@ public class Window extends javax.swing.JFrame {
             public void run() {
 
                 try {
-                    server = new Server(textPane);
+                    server = new Server(textPane, macChBx);
                     server.listenForConnection();
                 } catch (IOException ex) {
                     Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
@@ -318,6 +324,7 @@ public class Window extends javax.swing.JFrame {
     private javax.swing.JTextField ipTuTxt;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton listenBtn;
+    private javax.swing.JCheckBox macChBx;
     private javax.swing.JTextField messageTxt;
     private javax.swing.JButton sendBtn;
     private javax.swing.JTextPane textPane;

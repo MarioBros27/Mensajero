@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTextPane;
+import javax.swing.JCheckBox;
 
 public class Server {
 
@@ -29,6 +30,7 @@ public class Server {
     Socket regularSocket;
     Socket s;
     JTextPane textPane;
+    JCheckBox macChBx;
     DataInputStream din;
     DataOutputStream dout;
 
@@ -42,16 +44,18 @@ public class Server {
     BigInteger myX;
     BigInteger key;
 
-    public Server(JTextPane textPane) throws IOException {
+    public Server(JTextPane textPane, JCheckBox macChBx) throws IOException {
         stop = false;
         this.textPane = textPane;
+        this.macChBx = macChBx;
     }
 
-    public Server(String ip, JTextPane textPane) throws IOException {
+    public Server(String ip, JTextPane textPane, JCheckBox macChBx) throws IOException {
         stop = false;
         this.ip = ip;
         this.textPane = textPane;
         regularSocket = new Socket(ip, port);
+        this.macChBx = macChBx;
     }
 
     public void listenForConnection() throws IOException {
@@ -133,8 +137,11 @@ public class Server {
                     UIUtil.appendS(textPane, "Error decrypting message\n", Color.RED, true);
                     continue;
                 }
-
-                UIUtil.appendS(textPane, "Tu: " + message, Color.WHITE, false);
+                if(message.isEmpty()){
+                    UIUtil.appendS(textPane, "Error en integridad del mensaje", Color.RED, true);
+                } else {
+                    UIUtil.appendS(textPane, "Tu: " + message, Color.WHITE, false);
+                }
             } catch (EOFException e) {
                 UIUtil.appendS(textPane, "Stopped listening", Color.RED, true);
                 UIUtil.appendS(textPane, "Junior disconnected", Color.RED, true);
@@ -172,8 +179,11 @@ public class Server {
                     continue;
                 }
                 message = Util.translate(decrypted);
-
-                UIUtil.appendS(textPane, "Tu: " + message, Color.WHITE, false);
+                if(message.isEmpty()){
+                    UIUtil.appendS(textPane, "Error en integridad del mensaje\n", Color.RED, true);
+                } else {
+                    UIUtil.appendS(textPane, "Tu: " + message, Color.WHITE, false);
+                }
             } catch (EOFException e) {
                 UIUtil.appendS(textPane, "Juanita left, disconnect & connect again", Color.RED, true);
                 stopConnection();
@@ -234,7 +244,13 @@ public class Server {
 
     public void sendMessage(String message, byte function, boolean encrypted) throws IOException {
         try {
-            byte[] arr = Util.getByteArray(message, function);
+            byte[] arr;
+            if(macChBx.isSelected()){
+                arr = Util.getByteArray(message, function, true);
+            } else {
+                arr = Util.getByteArray(message, function, false);
+            }
+            
             if (encrypted) {
                 byte[] encryptedText = Ciphero.encipher(key, arr);
                 System.out.println("sendMessage from server text: " + Arrays.toString(encryptedText));

@@ -39,6 +39,7 @@
                   <Component id="listenBtn" alignment="0" min="-2" pref="64" max="-2" attributes="0"/>
                   <Component id="ipTuTxt" min="-2" pref="92" max="-2" attributes="0"/>
                   <Component id="connectBtn" alignment="0" min="-2" pref="80" max="-2" attributes="0"/>
+                  <Component id="macChBx" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -51,7 +52,6 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jScrollPane2" max="32767" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="94" max="-2" attributes="0"/>
@@ -60,9 +60,11 @@
                       <Component id="connectBtn" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="ipTuTxt" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="69" max="32767" attributes="0"/>
+                      <EmptySpace pref="35" max="32767" attributes="0"/>
+                      <Component id="macChBx" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="messageTxt" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="sendBtn" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -133,5 +135,11 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JCheckBox" name="macChBx">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Incorrect MAC?"/>
+        <Property name="actionCommand" type="java.lang.String" value="Incorrect MAC?"/>
+      </Properties>
+    </Component>
   </SubComponents>
 </Form>

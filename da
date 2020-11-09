@@ -1,0 +1,28 @@
+[33m945b0b4[m[33m ([m[1;36mHEAD -> [m[1;32mencryptedtwo[m[33m, [m[1;31morigin/encryptedtwo[m[33m)[m HEAD@{0}: reset: moving to @{1}
+[33ma5951dd[m HEAD@{1}: reset: moving to @{1}
+[33m945b0b4[m[33m ([m[1;36mHEAD -> [m[1;32mencryptedtwo[m[33m, [m[1;31morigin/encryptedtwo[m[33m)[m HEAD@{2}: reset: moving to origin/encryptedtwo
+[33m945b0b4[m[33m ([m[1;36mHEAD -> [m[1;32mencryptedtwo[m[33m, [m[1;31morigin/encryptedtwo[m[33m)[m HEAD@{3}: commit (amend): Encryption integrated
+[33ma5951dd[m HEAD@{4}: commit (amend): Encryption integrated
+[33md0bfbed[m HEAD@{5}: commit: Encrytion integrated
+[33m0b81bfb[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{6}: checkout: moving from master to encryptedtwo
+[33m0b81bfb[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{7}: reset: moving to origin/master
+[33mde3d44e[m[33m ([m[1;31morigin/fixes[m[33m)[m HEAD@{8}: reset: moving to origin/fixes
+[33mc37f300[m[33m ([m[1;32mfixes[m[33m)[m HEAD@{9}: reset: moving to origin/fixes
+[33mf9f4593[m HEAD@{10}: checkout: moving from fixes to master
+[33mc37f300[m[33m ([m[1;32mfixes[m[33m)[m HEAD@{11}: reset: moving to origin/fixes
+[33mc37f300[m[33m ([m[1;32mfixes[m[33m)[m HEAD@{12}: reset: moving to origin/fixes
+[33m663c6b9[m HEAD@{13}: pull origin fixes: Fast-forward
+[33m7f97be7[m HEAD@{14}: checkout: moving from master to fixes
+[33mf9f4593[m HEAD@{15}: commit: .
+[33m1a86c6b[m HEAD@{16}: reset: moving to origin/master
+[33m82b8cae[m HEAD@{17}: checkout: moving from fixes to master
+[33m7f97be7[m HEAD@{18}: commit: Fixes done
+[33mfb8cd15[m HEAD@{19}: commit: Trigger send button on Enter key
+[33m0183abd[m HEAD@{20}: commit: Components resized
+[33m869d108[m HEAD@{21}: commit: TexArea changed to TextPane
+[33m82b8cae[m HEAD@{22}: checkout: moving from master to fixes
+[33m82b8cae[m HEAD@{23}: reset: moving to origin/master
+[33m82b8cae[m HEAD@{24}: reset: moving to origin/master
+[33ma675fbb[m HEAD@{25}: reset: moving to origin/master
+[33me48af06[m HEAD@{26}: reset: moving to origin/master
+[33me48af06[m HEAD@{27}: clone: from https://github.com/MarioBros27/Mensajero.git
