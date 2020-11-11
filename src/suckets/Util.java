@@ -25,6 +25,8 @@ public class Util {
         String message = "";
         int size = messageIn[9] & 255;
         int function = messageIn[11];
+        System.out.println(Arrays.toString(messageIn));
+        System.out.println("function:" +function);
 //        System.out.println("Size Yessica:" + size);
         for (int c = off; c < off + size&& c<235; c++) {
             message = message + (char) messageIn[c];
@@ -32,9 +34,13 @@ public class Util {
         if(function == 1){
             try {
                 byte[] allegedMac = Arrays.copyOfRange(messageIn, 236, 256);
+                
+                System.out.println(Arrays.toString(allegedMac));
                 byte[] wholeThing = Arrays.copyOfRange(messageIn, 0, 236);
+                
                 MessageDigest md = MessageDigest.getInstance("SHA-1");
                 byte[] mac = md.digest(wholeThing);
+                System.out.println(Arrays.toString(mac));
                 if(Arrays.equals(allegedMac, mac) == false && mac != null){
                     return "Hola Alberto error";
                 }

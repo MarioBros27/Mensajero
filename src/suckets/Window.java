@@ -59,7 +59,6 @@ public class Window extends javax.swing.JFrame {
             String add = inetAddress.toString();
             char[] arr = add.toCharArray();
             if(arr[1]=='1'&&arr[2]=='7'&&arr[3]=='2'){
-                System.out.println("I'm here perro");
                 UIUtil.appendS(textPane,"Mi IP: "+add,Color.PINK,false);
             }
             
