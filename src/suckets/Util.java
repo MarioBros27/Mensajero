@@ -35,12 +35,12 @@ public class Util {
             try {
                 byte[] allegedMac = Arrays.copyOfRange(messageIn, 236, 256);
                 
-                System.out.println(Arrays.toString(allegedMac));
+                System.out.println("your mac"+Arrays.toString(allegedMac));
                 byte[] wholeThing = Arrays.copyOfRange(messageIn, 0, 236);
                 
                 MessageDigest md = MessageDigest.getInstance("SHA-1");
                 byte[] mac = md.digest(wholeThing);
-                System.out.println(Arrays.toString(mac));
+                System.out.println("Calculated mac:"+Arrays.toString(mac));
                 if(Arrays.equals(allegedMac, mac) == false && mac != null){
                     return "Hola Alberto error";
                 }
@@ -71,7 +71,7 @@ public class Util {
                     break;
                 }
                 returnS = returnS + arr[c];
-                System.out.println(c);
+//                System.out.println(c);
             }
 //            System.out.println("@getHellman->"+value+": "+returnS);
             return returnS;
