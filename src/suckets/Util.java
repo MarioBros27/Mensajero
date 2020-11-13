@@ -16,6 +16,23 @@ import java.util.Arrays;
  */
 public class Util {
 
+    public static String toHexString(byte[] hash) 
+    { 
+        // Convert byte array into signum representation  
+        BigInteger number = new BigInteger(1, hash);  
+  
+        // Convert message digest into hex value  
+        StringBuilder hexString = new StringBuilder(number.toString(16));  
+  
+        // Pad with leading zeros 
+        while (hexString.length() < 32)  
+        {  
+            hexString.insert(0, '0');  
+        }  
+
+        return hexString.toString();  
+    } 
+    
     public static String translate(byte[] messageIn) {
         int off = 20;
         String message = "";
@@ -43,13 +60,12 @@ public class Util {
             } catch (NoSuchAlgorithmException e) {  
                 System.out.println("Exception thrown for incorrect algorithm: " + e); 
             }
-            if(!Arrays.equals(macInMessage, macToCompare)){
-                System.out.println("INCORRECT");
-                return "";              
-            }
             System.out.println("SHA1 inMssg: " + toHexString(macInMessage));
             System.out.println("SHA1 toComp: " + toHexString(macToCompare));
-            
+            if(!Arrays.equals(macInMessage, macToCompare) && macInMessage != null){
+                return "";              
+            }
+                
         }
         
         return message;
@@ -78,23 +94,11 @@ public class Util {
 
     }
     
-    public static byte[] SHA1(byte[] convertme) throws NoSuchAlgorithmException{
+    public static byte[] SHA1(byte[] arr) throws NoSuchAlgorithmException{
         MessageDigest md = MessageDigest.getInstance("SHA-1"); 
-        return md.digest(convertme);
+        return md.digest(arr);
     }
     
-    public static String toHexString(byte[] hash) 
-    { 
-        BigInteger number = new BigInteger(1, hash); 
-        StringBuilder hexString = new StringBuilder(number.toString(16));  
-        while (hexString.length() < 32)  
-        {  
-            hexString.insert(0, '0');  
-        }  
-  
-        return hexString.toString();  
-    } 
-
     public static byte[] getByteArray(String message, byte function, boolean incorrectMAC) {
         char[] msg = message.toCharArray();
         byte[] arr = new byte[256];
@@ -139,7 +143,7 @@ public class Util {
                         
             try {
                 mc = SHA1(data);
-                System.out.println("SHA1: " + toHexString(mc));
+                //System.out.println("SHA1: " + toHexString(mc));
                 for (int c = 236; c < 256; c++) {
                     arr[c] = mc[c - 236];
                 }

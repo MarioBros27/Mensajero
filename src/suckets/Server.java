@@ -131,6 +131,7 @@ public class Server {
                 byte[] decrypted;
                 try {
                     decrypted = Ciphero.decipher(key, messageReceived);
+                    
                     message = Util.translate(decrypted);
                 } catch (Exception ex) {
                     Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
@@ -179,6 +180,7 @@ public class Server {
                     continue;
                 }
                 message = Util.translate(decrypted);
+                
                 if(message.isEmpty()){
                     UIUtil.appendS(textPane, "Error en integridad del mensaje\n", Color.RED, true);
                 } else {
