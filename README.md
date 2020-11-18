@@ -6,15 +6,19 @@ Integrantes:
 
 ## Requerimientos
 Instalar:
-1. Java (JDK)
+1. Java 11 (JDK)
 2. Netbeans IDE
 
 ## Contenido de las carpetas
 El codigo del programa se encuentra distribuido en los archivos .java dentro del directorio src/suckets:
-1. Suckets.java 
+1. Master.java 
 2. Window.java 
-2. Server.java
-4. Sender.java
+3. Server.java
+4. LogIn.java
+5. Httper.java
+6. Ciphero.java
+7. Util.java
+8. UIUtil.java
 
 ## Cualquier información para correr la aplicación
 Correrlo desde el IDE NetBeans.
